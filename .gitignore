@@ -2,6 +2,10 @@
 __pycache__/
 *.py[cod]
 
+# WING IDE, the **awesome** python IDE
+*.wpr
+*.wpu
+
 # C extensions
 *.so
 

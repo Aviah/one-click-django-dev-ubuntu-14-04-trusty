@@ -1,0 +1,86 @@
+# Edits:
+# Username: Replace "myusername" with your actual username
+
+USERNAME="myusername"
+SITEPROJECTNAME="mysite"
+PROJECTSDIR='myprojects'
+
+usermod -a -G www-data $USERNAME
+
+# django site
+apt-get install python-pip
+pip install Django==1.8.1
+mkdir -p /home/$USERNAME/$PROJECTSDIR/
+mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME
+mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/media_root
+mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/static_root
+mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_config
+touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_config/__init__.py
+touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_config/settings_tmp.py
+mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/logs
+touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/logs/main.log
+touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/debug.log
+touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/logs/debug_db.log
+apt-get install git
+chown -R $USERNAME:www-data /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/
+su $USERNAME -c "git clone django@PUB.IP.IP.IP:/home/django/site_repo.git /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_repo"
+cp scripts/manage.py /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/
+chown -R $USERNAME:www-data /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/
+cp scripts/django_projects.pth /usr/lib/python2.7/dist-packages/
+
+# Webservers
+apt-get install nginx
+service nginx stop
+apt-get install apache2-mpm-worker libapache2-mod-wsgi
+cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.orig
+cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.orig
+cp /etc/apache2/ports.conf /etc/apache2/ports.conf.orig
+cp etc/nginx.conf /etc/nginx/
+cp etc/apache2.conf /etc/apache2/
+cp etc/ports.conf /etc/apache2/
+cp etc/django-site-nginx /etc/nginx/sites-available/django
+ln -s /etc/nginx/sites-available/django /etc/nginx/sites-enabled/django
+rm /etc/nginx/sites-enabled/default
+cp etc/django-site-apache /etc/apache2/sites-available/django
+ln -s /etc/apache2/sites-available/django /etc/apache2/sites-enabled/django
+rm /etc/apache2/sites-enabled/000-default.conf
+service nginx restart
+service apache2 restart
+
+# Database
+echo; echo ">>> During the follwing MySQL installation, you will be asked to enter the MySQL root password."
+echo ">>> Select a strong password, and rememeber it, you will need it soon! (press any key to continue)"
+echo "[press any key to continue]"
+read dummy
+apt-get install mysql-server mysql-client
+echo; echo ">>> Running mysql_secure_installation. If the root password you just entered is strong, you don't need to change it"
+echo ">>> For the rest of the options, select the defaults"
+echo "[press any key to continue]"
+read dummy
+mysql_secure_installation
+cp /etc/mysql/my.cnf /etc/mysql/my.cnf.orig
+cp etc/my.cnf /etc/mysql/my.cnf
+service mysql restart
+apt-get install python-mysqldb
+python scripts/replace_django_mysql_passwd.py 
+echo "Use MySQL root password"
+mysql -uroot -p < scripts/db.sql
+
+# Init
+/home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/manage.py migrate
+/home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/manage.py createsuperuser
+
+
+echo "Woohoo! Reboot the machine, if everything OK you should be able to visit the site in your browser http://127.0.0.1"
+
+
+
+
+
+
+
+
+
+
+
+
