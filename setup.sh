@@ -12,15 +12,19 @@ apt-get install python-pip
 pip install Django==1.8.1
 mkdir -p /home/$USERNAME/$PROJECTSDIR/
 mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME
-mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/media_root
 mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/static_root
+mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/media_resources
+mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/media_uploads
+cp images/favicon.ico images/django-pony.jpg  /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/media_resources/
+cp images/avatar.png /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/media_uploads
 mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_config
 touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_config/__init__.py
-touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_config/settings_tmp.py
+cp scripts/settings_tmp.py /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_config/
 mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/logs
 touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/logs/main.log
 touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/debug.log
 touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/logs/debug_db.log
+mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/django_cache
 apt-get install git
 chown -R $USERNAME:www-data /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/
 su $USERNAME -c "git clone django@PUB.IP.IP.IP:/home/django/site_repo.git /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_repo"
@@ -65,6 +69,10 @@ apt-get install python-mysqldb
 python scripts/replace_django_mysql_passwd.py 
 echo "Use MySQL root password"
 mysql -uroot -p < scripts/db.sql
+
+# command line scripts
+cp scripts/site*.sh /usr/local/bin/
+cp scripts/tail-logs.sh /usr/local/bin/
 
 # Init
 /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/manage.py migrate
