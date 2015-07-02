@@ -2,7 +2,7 @@
 
 <VirtualHost *:8001>
 
-    ServerName www.example.com
+    ServerName 127.0.0.1
     ServerAdmin webmaster@localhost
     ServerSignature Off	
 
