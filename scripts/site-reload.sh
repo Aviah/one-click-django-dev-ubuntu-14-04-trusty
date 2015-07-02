@@ -1,1 +1,1 @@
-touch /home/django/mysite/site_repo/wsgi.py
+touch /home/myusername/myprojects/mysite/site_repo/wsgi.py

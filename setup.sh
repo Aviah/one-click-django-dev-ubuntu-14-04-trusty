@@ -20,6 +20,7 @@ cp images/avatar.png /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/media_uploads
 mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_config
 touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_config/__init__.py
 cp scripts/settings_tmp.py /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_config/
+cp scripts/secrets.py /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_config/
 mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/logs
 touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/logs/main.log
 touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/debug.log
@@ -74,13 +75,20 @@ mysql -uroot -p < scripts/db.sql
 # command line scripts
 cp scripts/site*.sh /usr/local/bin/
 cp scripts/tail-logs.sh /usr/local/bin/
+su $USERNAME -c "touch /home/$USERNAME/.bash_aliases"
+su $USERNAME -c "cat user/bash_aliases >> /home/$USERNAME/.bash_aliases"
+
 
 # Init
 /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/manage.py migrate
+echo ">>> Adding django site superuser (access to the site django administration)"
+echo "[press any key to continue]"
+read dummy
 /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/manage.py createsuperuser
+/home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/manage.py collectstatic
 
 
-echo "Woohoo! Reboot the machine, if everything OK you should be able to visit the site in your browser http://127.0.0.1"
+echo "Woohoo! If everything OK you should be able to visit the site in your browser http://127.0.0.1, or with manage.py runserver at http://127.0.0.1:8000"
 
 
 

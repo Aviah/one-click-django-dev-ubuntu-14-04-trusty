@@ -27,10 +27,10 @@ Simply edit and run the find_replace.sh script:
 
 These are the texts that you should replace (either with the script or, your editor of choice):
 
-1. Replace "myusername" with your actual username (files: setup.sh, scripts/django_projects.pth)
+1. Replace "myusername" with your actual username (files: setup.sh, scripts/django_projects.pth, etc/django-site-nginx)
 2. Replace "PUB.IP.IP.IP" with your actual vps IP (files: setup.sh)
-3. Optional: Replace "myprojects" with another projects directory name (files: setup.sh, scripts/django_projects.pth,etc/apache2.conf)
-4. Optional: Replace "mysite" with the actual project name on the server (files: setup.sh, scripts/django_projects.pth,etc/apache2.conf)
+3. Optional: Replace "myprojects" with another projects directory name (files: setup.sh, scripts/django_projects.pth,etc/apache2.conf, etc/django-site-nginx)
+4. Optional: Replace "mysite" with the actual project name on the server (files: setup.sh, scripts/django_projects.pth,etc/apache2.conf, etc/django-site-nginx)
 
 **Note: the project name is located on the server at /home/django** 
 
@@ -40,7 +40,12 @@ These are the texts that you should replace (either with the script or, your edi
 
 From the command line (make sure you are in the one-click-django-dev directory):
 
-1. Run setup:
- ```you@dev-machine$ ./setup.sh```
+
+
+1. Run setup as root from the one click dir:
+
+ ```you@dev-machine$ cd one-click-django-dev
+ you@dev-machine$ sudo su
+ you@dev-machine# ./setup.sh```
         
 2. Check: Browse to the site at 127.0.0.1
