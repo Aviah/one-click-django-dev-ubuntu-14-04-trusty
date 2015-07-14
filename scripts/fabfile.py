@@ -24,9 +24,9 @@ def site_up():
 
 
 @hosts('myusername@PUB.IP.IP.IP')
-def site_auth_on(auth):
+def site_auth_on():
     run('sudo /usr/local/bin/./site-auth-on.sh')
 
 @hosts('myusername@PUB.IP.IP.IP')
-def site_auth_off(auth):
+def site_auth_off():
     run('sudo /usr/local/bin/./site-auth-off.sh')

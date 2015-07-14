@@ -86,7 +86,7 @@ echo "[press any key to continue]"
 read dummy
 /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/manage.py createsuperuser
 /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/manage.py collectstatic
-
+chown -R $USERNAME:www-data /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/
 service apache2 restart
 service nginx restart
 
