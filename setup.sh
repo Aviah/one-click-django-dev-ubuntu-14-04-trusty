@@ -87,6 +87,16 @@ read dummy
 /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/manage.py createsuperuser
 /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/manage.py collectstatic
 
+service apache2 restart
+service nginx restart
+
+# fabric
+apt-get install fabric
+touch /home/$USERNAME/.fabricrc
+cp /home/$USERNAME/.fabricrc /home/$USERNAME/.fabricrc.orig
+echo "fabfile=/home/$USERNAME/fab_$SITEPROJECTNAME.py" > /home/$USERNAME/.fabricrc
+cp scripts/fabfile.py /home/$USERNAME/fab_$SITEPROJECTNAME.py
+chown $USERNAME:$USERNAME /home/$USERNAME/.fabric* /home/$USERNAME/fab_$SITEPROJECTNAME.py
 
 echo "Woohoo! If everything OK you should be able to visit the site in your browser http://127.0.0.1, or with manage.py runserver at http://127.0.0.1:8000"
 
