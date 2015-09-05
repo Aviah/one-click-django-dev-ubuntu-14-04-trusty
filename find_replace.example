@@ -1,0 +1,15 @@
+Example find and replace script
+Note: replace the /...replace.../ part
+
+# replace the "replace-with..." strings with the actual data
+# run this script from it's directory 
+
+# edit tp replace
+sed -i "s/PUB.IP.IP.IP/182.34.53.1/g" setup.sh scripts/fabfile.py
+sed -i "s/myusername/johnsm/g" setup.sh etc/apache2.conf etc/django-site-nginx scripts/django_projects.pth scripts/site-reload.sh scripts/tail-logs.sh scripts/fabfile.py
+
+# Optional, uncomment to replace
+#sed -i "s/myprojects/django_sites/g" setup.sh etc/apache2.conf etc/django-site-nginx scripts/django_projects.pth scripts/site-reload.sh scripts/tail-logs.sh scripts/fabfile.py
+#sed -i "s/mysite/cms_site/g" setup.sh scripts/django_projects.pth etc/django-site-nginx etc/apache2.conf scripts/site-reload.sh scripts/tail-logs.sh scripts/fabfile.py
+
+echo "Done"
