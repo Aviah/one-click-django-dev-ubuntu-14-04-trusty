@@ -15,7 +15,7 @@ mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME
 mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/static_root
 mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/media_resources
 mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/media_uploads
-cp images/favicon.ico images/django-pony.jpg  /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/media_resources/
+cp images/favicon.ico images/powered-by-django.gif  /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/media_resources/
 cp images/avatar.png /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/media_uploads
 mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_config
 touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_config/__init__.py
