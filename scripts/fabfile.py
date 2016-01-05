@@ -4,10 +4,13 @@ from fabric.api import *
 @hosts('django@PUB.IP.IP.IP')
 def deploy(collectstatic=False):
 
-    local('git -C ~/myprojects/mysite/site_repo/ push')
-    run('git -C ~/mysite/site_repo/ pull')
+    local('git --git-dir=~/myprojects/mysite/site_repo/ push production master')
     if collectstatic:
         run('python ~/mysite/manage.py collectstatic')
+        
+    run('rm ~/mysite/site_config/*.py')
+    run('touch ~/mysite/site_config/__init__.py')
+    run('cp ~/mysite/site_repo/settings_production.py ~/mysite/site_config/')
     run('touch ~/mysite/site_repo/wsgi.py')
 
 @hosts('django@PUB.IP.IP.IP')

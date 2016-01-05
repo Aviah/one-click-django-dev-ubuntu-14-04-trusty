@@ -38,19 +38,11 @@ server {
 
 	location  /static {
 	alias /home/myusername/myprojects/mysite/static_root;
-	expires 180d;
+	expires 1d;
 	gzip on;
 	gzip_types text/css application/x-javascript;
 
 	}
-
-	location /media {
-	alias /home/myusername/myprojects/mysite/media_resources;
-	expires 180d;
-	gzip off;
-
-	}
-
 
 	location /uploads {
 	alias /home/myusername/myprojects/mysite/media_uploads;
