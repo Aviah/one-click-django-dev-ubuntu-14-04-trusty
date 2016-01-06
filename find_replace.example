@@ -10,6 +10,8 @@ sed -i "s/myusername/johnsm/g" setup.sh etc/apache2.conf etc/django-site-nginx s
 
 # Optional, uncomment to replace
 sed -i "s/myprojects/django_sites/g" setup.sh etc/apache2.conf etc/django-site-nginx scripts/django_projects.pth scripts/site-reload.sh scripts/tail-logs.sh scripts/fabfile.py
+
+# Use the same site name you used for mysite on the server
 sed -i "s/mysite/cms_site/g" setup.sh scripts/django_projects.pth etc/django-site-nginx etc/apache2.conf scripts/site-reload.sh scripts/tail-logs.sh scripts/fabfile.py
 
 echo "Done"
