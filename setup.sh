@@ -29,7 +29,7 @@ mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/django_cache
 apt-get install git
 chown -R $USERNAME:www-data /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/
 su $USERNAME -c "git clone django@PUB.IP.IP.IP:/home/django/site_repo.git /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_repo"
-su $USERNAME -c "git --git-dir=/home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_repo remote add production django@PUB.IP.IP.IP:/home/django/$SITEPROJECTNAME/site_repo/ "
+su $USERNAME -c "git --git-dir=/home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_repo/.git remote add production django@PUB.IP.IP.IP:/home/django/$SITEPROJECTNAME/site_repo/ "
 cp scripts/manage.py /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/
 cp /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_repo/settings_dev.py /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_config/
 chown -R $USERNAME:www-data /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/

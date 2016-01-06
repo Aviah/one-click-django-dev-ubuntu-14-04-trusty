@@ -7,6 +7,8 @@ sed -i "s/myusername/replace-with-your-username/g" setup.sh etc/apache2.conf etc
 
 # Optional, uncomment to replace
 #sed -i "s/myprojects/replace-with-another-projects-dir-name/g" setup.sh etc/apache2.conf etc/django-site-nginx scripts/django_projects.pth scripts/site-reload.sh scripts/tail-logs.sh scripts/fabfile.py
+
+# Use the same site name you used for mysite on the server
 #sed -i "s/mysite/replace-with-another-project-name/g" setup.sh scripts/django_projects.pth etc/django-site-nginx etc/apache2.conf scripts/site-reload.sh scripts/tail-logs.sh scripts/fabfile.py
 
 echo "Done"

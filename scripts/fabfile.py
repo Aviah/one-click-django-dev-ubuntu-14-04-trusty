@@ -4,7 +4,10 @@ from fabric.api import *
 @hosts('django@PUB.IP.IP.IP')
 def deploy(collectstatic=False):
 
-    local('git --git-dir=~/myprojects/mysite/site_repo/ push production master')
+    local('git --git-dir=/home/myusername/myprojects/mysite/site_repo/.git push production master')
+    with cd('~/mysite/site_repo'):
+        run('git reset --hard')
+    
     if collectstatic:
         run('python ~/mysite/manage.py collectstatic')
         
