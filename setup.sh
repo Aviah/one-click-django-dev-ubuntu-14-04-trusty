@@ -23,7 +23,7 @@ cp scripts/settings_tmp.py /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_co
 cp scripts/secrets.py /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/site_config/
 mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/logs
 touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/logs/main.log
-touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/debug.log
+touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/logs/debug.log
 touch /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/logs/debug_db.log
 mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/django_cache
 apt-get install git
