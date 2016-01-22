@@ -51,8 +51,13 @@ rm /etc/nginx/sites-enabled/default
 cp etc/django-site-apache /etc/apache2/sites-available/django
 ln -s /etc/apache2/sites-available/django /etc/apache2/sites-enabled/django
 rm /etc/apache2/sites-enabled/000-default.conf
-service nginx restart
+
+# Ubuntu 12.04 use
+#rm /etc/apache2/sites-enabled/000-default
+
 service apache2 restart
+service nginx restart
+
 
 # Database
 echo; echo ">>> During the follwing MySQL installation, you will be asked to enter the MySQL root password."
