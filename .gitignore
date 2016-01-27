@@ -6,8 +6,11 @@ __pycache__/
 *.wpr
 *.wpu
 
+
 # C extensions
 *.so
+
+.DS_Store
 
 # Distribution / packaging
 .Python

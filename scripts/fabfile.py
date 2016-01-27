@@ -1,3 +1,4 @@
+import datetime
 from fabric.api import *
 
 
@@ -19,6 +20,15 @@ def deploy(collectstatic=False):
 @hosts('django@PUB.IP.IP.IP')
 def migrate():
     run('python ~/mysite/manage.py migrate')
+    
+@hosts('django@PUB.IP.IP.IP')
+def backup(backup_name=None):
+
+    if backup_name == None:
+        backup_name = datetime.datetime.now().strftime('%Y-%m-%d--%H-%M-%S')
+    with cd('~/mysite/'):
+        run('python manage.py dumpdata > db_backup/%s'%backup_name)
+
 
 @hosts('myusername@PUB.IP.IP.IP')
 def site_maintenance():
@@ -36,3 +46,4 @@ def site_auth_on():
 @hosts('myusername@PUB.IP.IP.IP')
 def site_auth_off():
     run('sudo /usr/local/bin/./site-auth-off.sh')
+    
