@@ -9,8 +9,9 @@ usermod -a -G www-data $USERNAME
 
 # django site
 apt-get install python-pip
-pip install Django==1.8.7
+pip install Django==1.8.9
 mkdir -p /home/$USERNAME/$PROJECTSDIR/
+chown $USERNAME:$USERNAME /home/$USERNAME/$PROJECTSDIR/
 mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME
 mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/static_root
 mkdir /home/$USERNAME/$PROJECTSDIR/$SITEPROJECTNAME/media_resources

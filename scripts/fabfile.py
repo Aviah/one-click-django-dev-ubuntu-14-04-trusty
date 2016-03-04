@@ -12,8 +12,12 @@ def deploy(collectstatic=False):
     if collectstatic:
         run('python ~/mysite/manage.py collectstatic')
         
-    run('rm ~/mysite/site_config/*.py')
-    run('touch ~/mysite/site_config/__init__.py')
+    with cd('~/mysite/site_config'):
+        run('mv secrets.py secrets.txt')
+        run('rm *.py')
+        run('mv secrets.txt secrets.py')
+        run('touch __init__.py')
+    
     run('cp ~/mysite/site_repo/settings_production.py ~/mysite/site_config/')
     run('touch ~/mysite/site_repo/wsgi.py')
 
@@ -32,18 +36,18 @@ def backup(backup_name=None):
 
 @hosts('myusername@PUB.IP.IP.IP')
 def site_maintenance():
-    run('sudo /usr/local/bin/./site-maintenance.sh')
+    sudo('/usr/local/bin/./site-maintenance.sh')
 
 @hosts('myusername@PUB.IP.IP.IP')
 def site_up():
-    run('sudo /usr/local/bin/./site-up.sh')
+    sudo('/usr/local/bin/./site-up.sh')
 
 
 @hosts('myusername@PUB.IP.IP.IP')
 def site_auth_on():
-    run('sudo /usr/local/bin/./site-auth-on.sh')
+    sudo('/usr/local/bin/./site-auth-on.sh')
 
 @hosts('myusername@PUB.IP.IP.IP')
 def site_auth_off():
-    run('sudo /usr/local/bin/./site-auth-off.sh')
+    sudo('/usr/local/bin/./site-auth-off.sh')
     
