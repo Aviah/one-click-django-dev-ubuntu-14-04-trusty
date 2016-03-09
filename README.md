@@ -1,51 +1,193 @@
-# one-click-django-server
-A set of scripts to auto install development website for a django 1.8 website, on ubuntu machine
-Tested on Ubuntu 14.04 LTS
+# one-click-django-dev-ubuntu-14-04-trusty
 
-## Intro
-Tutorial with a real site, local after server set
-Http
-Re build and try
+**A set of scripts to auto install local dev and deployment django site for a one-click-django-server**    
+Server: Ubuntu 14.04 LTS    
+Local Dev Machine: Ubuntu 14.04 LTS
+
+## Why?
+
+Tutorials usually start with a local website. But it's often more useful, and more fun, to see a real working website ASAP. With a real website you see something working early, you get a better feel of the progress, and you have something to demonstrate.  
+  
+The following scripts allow you to (almost) automatically install a django development environment on a local Ubuntu 14.04 LTS (you can use a virtual machine with Ubuntu). Together with the matching auto-install production scripts, you get a complete development, deployment and production environment, without messing too much with configuration.
+
+Once installed, it's easy to continue with any django tutorial, and instantly deploy to a real website. It's also a great way to learn a bit about deployment and some of of django's settings quirks.
+
+For the seasoned django developer, it's an easy way to have a new single server django website up and running, quickly.
+
+## How?
+First Install the server with the [one-click-django-server](https://github.com/aviah/one-click-django-server/master/readme) (any Ubuntu VPS will do). Once the server works, and you can browse to the website, you can install the development environment. 
+
+The one-click-django-dev scripts will clone the server repo, then install and configure a local website. For deployment, the script installs fabric and includes a simple fabric file with common deployment recipes.
 
 
-## Prep:
+## Tutorial
 
-### Overview:
-1. Install the server, see one-click-django server
-2. Donwload the one-click-django-dev files to your local machine (you don't need to clone a repository, just the files)
-3. Replace the required texts in the config files (see "Text to Replace")
-4. SSH access to the server. If the django dev machine is not the one you installed the server from, you will need to set SSH
+If you are new to django, there is also a tutorial!   
+ 
+It's built on the official django polls tutorial, but here you learn on this real development-production environemnt. This version of the official polls tutorial includes working with git, deployment, and basic server troubleshooting.   
+
+So you will have the polls app working on a real website, at **www.yourdomain.com/polls**!
 
 
-### Text to Replace:
-Edit the scripts with your site specific info, e.g. username.
-Simply edit and run the find_replace.sh script: 
+## Installation Prep
+
+
+#### Overview:  
+
+** Step 1: Install the server with-one-click-django-server**   
+** Step 2: Local dev machine**  
+** Step 3: Make sure you have SSH access to the server **  
+** Step 4: Download & prepare the one-click-django-dev config files**
+
+
+
+#### Step 1: Install the Server
+
+With the one-click-django-server scripts you can auto install a complete single-server django website on any Ubuntu VPS. The setup script installs and configures almost everything, including a git repository. This repository is cloned to the development environment.
+
+Once the server is ready, and the website works,  continue to the local dev environment on your Ubuntu local machine.
+
+For the auto install of the server, see [one-click-django-server](https://github.com/aviah/one-click-django-server/master/readme.md)
+
+#### Step 2: Local Dev Machine
+
+Prepare a local Ubuntu machine for dev, recommended a clean slate on a virtual machine.
+
+Everything was tested on a clean Ubuntu 14.04 LTS, so the easiest way would be to prepare a new local virtual machine that runs Ubuntu 14.04 (VM Fusion works fine for me, but any virtual machine on should be OK).
+
+A clean slate VM is great, because you can easily change things and focus on this project and keep it's settings, libraries etc. I also find it handy to develop, test and deploy on the same OS of the server.
+
+*Note: There should be no issues running the script on existing Ubuntu. However, running it on existing machine will change some of the existing configurations (changed files will be saved as .orig).*
+
+
+#### Step 3: Make sure you have SSH access to the server.
+
+If you use the **same machine** that you used when installing the server, than you should already have SSH access to the server.
+
+Check from your dev machine:
+
+    you@dev-machine$ ssh PUB.IP.IP.IP
+
+And:
+
+    you@dev-machine$ ssh django@PUB.IP.IP.IP
     
-    ```you@dev-machine$ nano find_replace.sh
-    you@dev-machine$ ./find_replace.sh```
-    
+*Replace PUB.IP.IP.IP with the actual VPS public ip (or hostname)*
 
-These are the texts that you should replace (either with the script or, your editor of choice):
+If you use **another machine** (not the one you created the server with), then you should add your ssh public key of this machine to the server. Since the server is configured to block password authentication, the easiest way is:
 
-1. Replace "myusername" with your actual username (files: setup.sh, scripts/django_projects.pth, etc/django-site-nginx)
-2. Replace "PUB.IP.IP.IP" with your actual vps IP (files: setup.sh)
-3. Optional: Replace "myprojects" with another projects directory name (files: setup.sh, scripts/django_projects.pth,etc/apache2.conf, etc/django-site-nginx)
-4. Optional: Replace "mysite" with the actual project name on the server (files: setup.sh, scripts/django_projects.pth,etc/apache2.conf, etc/django-site-nginx)
+1. If it's a new machine, without ssh keys, create one:
 
-**Note: the project name is located on the server at /home/django** 
+		you@dev-machine: mkdir -p ~/.ssh
+		you@dev-machine: chmod 700 ~/.ssh
+		you@dev-machine: ssh-keygen -t rsa
+
+2. Copy the public key (~/.ssh/id_rsa.pub) to the machine you created the server with, and name the file dev_id_rsa.pub
+3. Upload this key to the server:
+
+		you@local-machine-with-acccess-to-server: scp dev_id_rsa.pub @PUB.IP.IP.IP:~/
+		
+4. Add this key to on the server:
+
+		you@my-django-server$ cat dev_id_rsa.pub >> .ssh/authorized_keys
+		you@my-django-server$ sudo su
+		you@my-django-server# cat dev_id_rsa.pub >> /home/django/.ssh/authorized_keys
+		you@my-django-server# exit
+		you@my-django-server$ rm dev_id_rsa.pub
+
+
+
+#### Step 4: Download & prepare the config files
+
+1. Download the one-click-django-dev files. You don't need to clone a repo,
+just the files.
+
+2. Open a command line, and cd to the one-click-django-dev directory
+
+       you@dev-machine$ cd one-click-django-dev
+       
+3. Edit find_replace.sh with your actual ip, username etc:
+
+       you@dev-machine$ nano find_replace.sh                                                 
+                     
+	In the editor, replace the items that start with "replace-with…" with your actual data.
+	
+	So when you see a line like this: 
+		
+		sed -i "s/myusername/replace-with-your-username/g" setup.sh
+			
+	The edited line should look like the following:
+	
+		sed -i "s/myusername/john/g" setup.sh
+		
+	To see an example of a fully edited file, see find_replace.example (saved in the same directory of find_replace.sh).
+	
+	These are the items to edit in find_replace.sh:
+
+
+	Item to replace | Replace with
+----------------| ------------  
+"replace-with-actual-vps-ip" | The actual VPS Public IP
+"replace-with-your-username" | Your actual Linux username
+Optional: "replace-with-another-projects-dir-name" | Another projects directory name
+Optional: "replace-with-another-project-name" | Another project name
+     
+	Use **the same name to replace "mysite" that you used in the server.** The project assumes that the site directory name is the same on both the server and the development environment. So if you changed the the project name (e.g. to "my-django-site") when you installed the one-click-django-server, edit the same change here. 
+
+	To change Optional items, uncomment the line.
+
+              
+4. Run find_replace.sh. After you finished edit find_replace.sh, exit the editor and run the script:
+
+       you@dev-machine$ ./find_replace.sh
+          
+*Note:If you do want to have a different name on the server and the development machine, you will have to manaualy edit the fabfile (one-click-django-dev/scripts/fabfile.py) before running the setup script*  
 
 
 ## Install
-** Only after prep, text was replaced **
 
-From the command line (make sure you are in the one-click-django-dev directory):
-
+From the command line (make sure you are in the one-click-django-dev directory)
 
 
-1. Run setup as root from the one click dir:
+1. Change user to root:
+	
+		you@dev-machine$ sudo su
+	
 
- ```you@dev-machine$ cd one-click-django-dev
- you@dev-machine$ sudo su
- you@dev-machine# ./setup.sh```
+
+2. Simply Run setup as root (make sure you are in the one-click-django-dev directory):
+     
+     	you@dev-machine# ./setup.sh
         
-2. Check: Browse to the site at 127.0.0.1
+Thats' it! Browse to the local site at 127.0.0.1
+If eveything works, you should see something like [this website example](website_ubuntu_trusty.png)
+
+The project is located in your home directory, at **~/myprojects/mysite** 
+
+*Note that on the server, the project is located at the django user home directory at /home/django/mysite/*
+
+A word about IDE: Choosing an IDE is a personal preferene. If you don't have a prefered python IDE yet, I'll just mention Wing IDE Pro which I use for years and to me, it's the best Python IDE. It's built exactly for the "Python Zen", it's light, with django integration, git integration, excellent debugging and great support.
+
+## What's Next?
+
+Congrats! You have a local site to work with, a production website to deploy to, and a simple deployment script. Start working on your local site, then deploy, and browse to your real website. 
+The simplest deployment is really easy! After you develop, commit and push a change that should go to production,  simply:
+
+	you@dev-machine: fab deploy
+	
+See [Deployment](https://github.com/aviah/one-click-django-docs/master/deployment.md)
+
+A detailed project documentation is avaialable in one-click-django-docs, with refrence to imports, templates, settings, files, directories, etc. 
+See [Docs](https://github.com/aviah/one-click-django-docs/master/readme_docs.md)
+
+The project's [Playground](https://github.com/aviah/one-click-django-docs/master/readme_docs.md) let's you play and experiment a bit with the django-one-click project.
+
+If you are new to django, why not take our version to the official django polls tutorial. It implments the polls app in in this real development-deployment-production environment, with git.   
+When you finish this tutorial, the polls app will run on the real website at www.yourdommain.com/polls.    
+Start here [Part 1: Create the Polls App](https://github.com/aviah/one-click-django-docs/master/tutorial_part1.md) 
+	
+To support this project with my affiliate link:| 
+-|
+https://www.linode.com/?r=cc1175deb6f3ad2f2cd6285f8f82cefe1f0b3f46|
+	
+
