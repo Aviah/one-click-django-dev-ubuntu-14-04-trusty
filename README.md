@@ -139,7 +139,7 @@ Optional: "replace-with-another-project-name" | Another project name
               
 4. Run find_replace.sh. After you finished edit find_replace.sh, exit the editor and run the script:
 
-       you@dev-machine$ ./find_replace.sh
+        you@dev-machine$ ./find_replace.sh
           
 *Note:If you do want to have a different name on the server and the development machine, you will have to manaualy edit the fabfile (one-click-django-dev/scripts/fabfile.py) before running the setup script*  
 
@@ -154,10 +154,9 @@ From the command line (make sure you are in the one-click-django-dev directory)
 		you@dev-machine$ sudo su
 	
 
-
 2. Simply Run setup as root (make sure you are in the one-click-django-dev directory):
-     
-     	you@dev-machine# ./setup.sh
+
+		you@dev-machine# ./setup.sh
         
 Thats' it! Browse to the local site at 127.0.0.1
 If eveything works, you should see something like [this website example](website_ubuntu_trusty.png)
@@ -186,8 +185,7 @@ If you are new to django, why not take our version to the official django polls 
 When you finish this tutorial, the polls app will run on the real website at www.yourdommain.com/polls.    
 Start here [Part 1: Create the Polls App](https://github.com/aviah/one-click-django-docs/master/tutorial_part1.md) 
 	
-To support this project with my affiliate link:| 
--|
+Support this project with my affiliate link| 
+-------------------------------------------|
 https://www.linode.com/?r=cc1175deb6f3ad2f2cd6285f8f82cefe1f0b3f46|
-	
 
