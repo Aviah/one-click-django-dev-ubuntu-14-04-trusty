@@ -2,14 +2,13 @@
 
 **A set of scripts to auto-install a local dev & deployment django site, for a [one-click-django-server](https://github.com/Aviah/one-click-django-server)**    
    
-Local dev machine: OSX 10.11 El-Capitan    
+Local dev machine: Ubuntu 14.04 LTS    
 Server: Ubuntu 14.04 LTS    
 
 
 [Why?](#why)    
 [How?](#how)    
-[The Polls Tutorial with Deployment](#the-polls-tutorial-with-deployment)    
-[Pre-Requisits on your dev Mac](#pre-requisits-on-your-dev-mac)    
+[The Polls Tutorial with Deployment](#the-polls-tutorial-with-deployment)       
 [Install Prep](#install-prep)   
 [Auto Install](#auto-install)    
 [What's Next?](#whats-next) 
