@@ -111,7 +111,7 @@ If you use **another machine** (not the one you created the server with), then y
 #### Step 4: Download & prepare the config files
 
 1. Download the one-click-django-dev files. You don't need to clone a repo,
-just the files.
+just the files. Save to `one-click-django-dev-ubuntu-14-04-trusty` directory (omit the "master" from the directory name if necessery).
 
 2. Open a command line, and cd to the one-click-django-dev-ubuntu-14-04-trusty directory:
 
